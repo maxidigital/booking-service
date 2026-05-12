@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/slots")
@@ -38,12 +37,12 @@ public class SlotController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable UUID id) {
+    public void delete(@PathVariable String id) {
         service.delete(id);
     }
 
     @PostMapping("/{id}/book")
-    public SlotResponse book(@PathVariable UUID id, @RequestBody BookSlotRequest req) {
+    public SlotResponse book(@PathVariable String id, @RequestBody BookSlotRequest req) {
         return service.book(id, req);
     }
 }
