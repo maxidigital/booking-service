@@ -9,9 +9,13 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.LocalDateTime;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Service
 public class CalendarNotificationService {
+
+    private static final Logger LOG = Logger.getLogger(CalendarNotificationService.class.getName());
 
     @Value("${calendar.service.url}")
     private String calendarServiceUrl;
@@ -29,6 +33,7 @@ public class CalendarNotificationService {
 
     @Async
     public void notifyCalendar(String clientName, String clientEmail, LocalDateTime dateTime) {
+        LOG.info("Notifying calendar-service at: " + calendarServiceUrl);
         try {
             String end = dateTime.plusMinutes(durationMinutes).toString();
             String body = "{"
@@ -49,7 +54,7 @@ public class CalendarNotificationService {
 
             httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (Exception e) {
-            // Calendar failure must not affect the booking response
+            LOG.log(Level.SEVERE, "Calendar notification failed", e);
         }
     }
 
