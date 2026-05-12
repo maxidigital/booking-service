@@ -19,10 +19,13 @@ public class SlotService {
 
     private final SlotRepository repository;
     private final EmailNotificationService emailService;
+    private final CalendarNotificationService calendarService;
 
-    public SlotService(SlotRepository repository, EmailNotificationService emailService) {
+    public SlotService(SlotRepository repository, EmailNotificationService emailService,
+                       CalendarNotificationService calendarService) {
         this.repository = repository;
         this.emailService = emailService;
+        this.calendarService = calendarService;
     }
 
     public List<SlotResponse> getAvailable() {
@@ -70,6 +73,7 @@ public class SlotService {
         slot.setClientEmail(req.getEmail());
         SlotResponse response = SlotResponse.from(repository.save(slot));
         emailService.notifyBooking(req.getName(), req.getEmail(), slot.getDateTime());
+        calendarService.notifyCalendar(req.getName(), req.getEmail(), slot.getDateTime());
         return response;
     }
 }
