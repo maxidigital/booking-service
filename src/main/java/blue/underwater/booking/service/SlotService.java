@@ -5,6 +5,7 @@ import blue.underwater.booking.dto.CreateSlotRequest;
 import blue.underwater.booking.dto.SlotResponse;
 import blue.underwater.booking.model.Slot;
 import blue.underwater.booking.repository.SlotRepository;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,9 +36,16 @@ public class SlotService {
     }
 
     public SlotResponse create(CreateSlotRequest req) {
+        if (repository.existsByDateTime(req.getDateTime())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Slot already exists");
+        }
         Slot slot = new Slot();
         slot.setDateTime(req.getDateTime());
-        return SlotResponse.from(repository.save(slot));
+        try {
+            return SlotResponse.from(repository.save(slot));
+        } catch (DataIntegrityViolationException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Slot already exists");
+        }
     }
 
     @Transactional

@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "slots")
+@Table(name = "slots", uniqueConstraints = @UniqueConstraint(columnNames = "dateTime"))
 public class Slot {
 
     @Id
