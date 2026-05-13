@@ -59,14 +59,12 @@ public class EmailNotificationService {
                 subject = "Booking confirmed — " + formattedDate;
                 html = "<p>Hi " + escape(clientName) + ",</p>"
                     + "<p>Your bodywork session is confirmed for <strong>" + formattedDate + "</strong>.</p>"
-                    + "<p>See you soon!</p>"
-                    + "<p>Maxi Bottazzi · Bodywork Berlin</p>";
+                    + "<p>See you soon!</p>";
             } else {
                 subject = "Reserva confirmada — " + formattedDate;
                 html = "<p>Hola " + escape(clientName) + ",</p>"
                     + "<p>Tu sesión de bodywork está confirmada para el <strong>" + formattedDate + "</strong>.</p>"
-                    + "<p>¡Hasta pronto!</p>"
-                    + "<p>Maxi Bottazzi · Bodywork Berlin</p>";
+                    + "<p>¡Hasta pronto!</p>";
             }
             send(clientEmail, subject, html);
         } catch (Exception e) {
@@ -78,7 +76,7 @@ public class EmailNotificationService {
         String body = "{"
             + "\"app\":\"booking-service\","
             + "\"from\":\"noreply@maxibottazzi.de\","
-            + "\"fromName\":\"Maxi Bottazzi Booking\","
+            + "\"fromName\":\"maxibottazzi.de\","
             + "\"to\":\"" + escape(to) + "\","
             + "\"subject\":\"" + escape(subject) + "\","
             + "\"html\":\"" + escape(html) + "\""
