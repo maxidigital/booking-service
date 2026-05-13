@@ -127,6 +127,7 @@ public class SlotService {
             if (res.statusCode() == 409) throw new ResponseStatusException(HttpStatus.CONFLICT, "Slot already booked");
             if (res.statusCode() != 200) throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Calendar service error");
             SlotResponse slotResponse = mapper.readValue(res.body(), SlotResponse.class);
+            LOG.info("Slot booked, dateTime=" + slotResponse.getDateTime() + ", notifying email");
             emailService.notifyBooking(req.getName(), req.getEmail(), slotResponse.getDateTime());
             return slotResponse;
         } catch (ResponseStatusException e) {

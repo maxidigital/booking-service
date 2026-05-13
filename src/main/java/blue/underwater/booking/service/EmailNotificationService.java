@@ -11,9 +11,13 @@ import java.net.http.HttpResponse;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Service
 public class EmailNotificationService {
+
+    private static final Logger LOG = Logger.getLogger(EmailNotificationService.class.getName());
 
     @Value("${owner.email}")
     private String ownerEmail;
@@ -52,7 +56,7 @@ public class EmailNotificationService {
 
             httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (Exception e) {
-            // Email failure must not affect the booking response
+            LOG.log(Level.SEVERE, "Email notification failed", e);
         }
     }
 
