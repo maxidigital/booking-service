@@ -81,10 +81,10 @@ public class EmailNotificationService {
         return "<!DOCTYPE html><html><head><meta charset='UTF-8'>" +
             "<link href='https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300&family=IBM+Plex+Mono:wght@300;400&display=swap' rel='stylesheet'>" +
             "</head>" +
-            "<body style='margin:0;padding:0;background:#111010;color:#f0ebe3;'>" +
-            "<table width='100%' cellpadding='0' cellspacing='0' style='background:#111010;'><tr>" +
+            "<body style='margin:0;padding:0;background:#1e1a16;color:#f0ebe3;'>" +
+            "<table width='100%' cellpadding='0' cellspacing='0' style='background:#1e1a16;'><tr>" +
             "<td align='center' style='padding:48px 24px;'>" +
-            "<table width='100%' style='max-width:460px;' cellpadding='0' cellspacing='0'>" +
+            "<table width='100%' style='max-width:480px;' cellpadding='0' cellspacing='0'>" +
 
             // Gold divider
             "<tr><td style='padding-bottom:24px;'>" +
@@ -92,52 +92,52 @@ public class EmailNotificationService {
 
             // Eyebrow
             "<tr><td style='padding-bottom:24px;'>" +
-            "<span style='font-family:IBM Plex Mono,monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:#6a5a48;'>" +
+            "<span style='font-family:IBM Plex Mono,monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:#6a5a48;'>" +
             esc(eyebrow) + "</span></td></tr>" +
 
             // Date
-            "<tr><td style='padding-bottom:6px;'>" +
-            "<span style='font-family:Cormorant Garamond,Georgia,serif;font-style:italic;font-weight:300;font-size:30px;color:#f0ebe3;line-height:1.2;text-transform:capitalize;'>" +
+            "<tr><td style='padding-bottom:8px;'>" +
+            "<span style='font-family:Cormorant Garamond,Georgia,serif;font-style:italic;font-weight:300;font-size:38px;color:#f0ebe3;line-height:1.2;text-transform:capitalize;'>" +
             esc(date) + "</span></td></tr>" +
 
             // Time
-            "<tr><td style='padding-bottom:36px;'>" +
-            "<span style='font-family:IBM Plex Mono,monospace;font-size:15px;color:#b8902a;'>" +
+            "<tr><td style='padding-bottom:40px;'>" +
+            "<span style='font-family:IBM Plex Mono,monospace;font-size:18px;color:#b8902a;'>" +
             esc(time) + " h</span></td></tr>" +
 
             // Divider
-            "<tr><td style='height:1px;background:#1e1c1a;padding:0;font-size:0;'>&nbsp;</td></tr>" +
+            "<tr><td style='height:1px;background:#2a251e;padding:0;font-size:0;'>&nbsp;</td></tr>" +
 
             // Name label
-            "<tr><td style='padding-top:24px;padding-bottom:5px;'>" +
-            "<span style='font-family:IBM Plex Mono,monospace;font-size:8px;letter-spacing:0.18em;text-transform:uppercase;color:#6a5a48;'>" +
+            "<tr><td style='padding-top:28px;padding-bottom:6px;'>" +
+            "<span style='font-family:IBM Plex Mono,monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:#6a5a48;'>" +
             esc(nameLabel) + "</span></td></tr>" +
 
             // Name value
-            "<tr><td style='padding-bottom:18px;'>" +
-            "<span style='font-family:IBM Plex Mono,monospace;font-size:13px;color:#c8bfb0;'>" +
+            "<tr><td style='padding-bottom:20px;'>" +
+            "<span style='font-family:IBM Plex Mono,monospace;font-size:16px;color:#c8bfb0;'>" +
             esc(name) + "</span></td></tr>" +
 
             // Email label
-            "<tr><td style='padding-bottom:5px;'>" +
-            "<span style='font-family:IBM Plex Mono,monospace;font-size:8px;letter-spacing:0.18em;text-transform:uppercase;color:#6a5a48;'>// email</span></td></tr>" +
+            "<tr><td style='padding-bottom:6px;'>" +
+            "<span style='font-family:IBM Plex Mono,monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:#6a5a48;'>// email</span></td></tr>" +
 
             // Email value
-            "<tr><td style='padding-bottom:36px;'>" +
-            "<span style='font-family:IBM Plex Mono,monospace;font-size:13px;color:#c8bfb0;'>" +
+            "<tr><td style='padding-bottom:40px;'>" +
+            "<span style='font-family:IBM Plex Mono,monospace;font-size:16px;color:#c8bfb0;'>" +
             esc(email) + "</span></td></tr>" +
 
             // Divider
-            "<tr><td style='height:1px;background:#1e1c1a;padding:0;font-size:0;'>&nbsp;</td></tr>" +
+            "<tr><td style='height:1px;background:#2a251e;padding:0;font-size:0;'>&nbsp;</td></tr>" +
 
             // Closing
-            "<tr><td style='padding-top:28px;padding-bottom:48px;'>" +
-            "<span style='font-family:Cormorant Garamond,Georgia,serif;font-style:italic;font-size:20px;color:#f0ebe3;'>" +
+            "<tr><td style='padding-top:32px;padding-bottom:48px;'>" +
+            "<span style='font-family:Cormorant Garamond,Georgia,serif;font-style:italic;font-size:24px;color:#f0ebe3;'>" +
             esc(closing) + "</span></td></tr>" +
 
             // Footer
-            "<tr><td style='border-top:1px solid #1e1c1a;padding-top:20px;'>" +
-            "<span style='font-family:IBM Plex Mono,monospace;font-size:8px;letter-spacing:0.1em;color:#4a3e30;'>maxibottazzi.de</span>" +
+            "<tr><td style='border-top:1px solid #2a251e;padding-top:20px;'>" +
+            "<span style='font-family:IBM Plex Mono,monospace;font-size:9px;letter-spacing:0.1em;color:#4a3e30;'>maxibottazzi.de</span>" +
             "</td></tr>" +
 
             "</table></td></tr></table></body></html>";
