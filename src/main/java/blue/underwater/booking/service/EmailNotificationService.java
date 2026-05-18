@@ -46,7 +46,7 @@ public class EmailNotificationService {
             String subject = "Nueva reserva — " + clientName + ", " + date + " " + time + "h";
             String html = buildHtml(
                 "// nueva reserva",
-                date, time,
+                null, date, time,
                 "// nombre", clientName,
                 clientEmail,
                 "Hasta pronto."
@@ -60,14 +60,18 @@ public class EmailNotificationService {
     private void sendClientConfirmation(String clientName, String clientEmail, String date, String time, boolean en) {
         try {
             String subject = en
-                ? "Booking confirmed — " + date + " " + time + "h"
+                ? "Your booking — " + date + " " + time + "h"
                 : "Reserva confirmada — " + date + " " + time + "h";
+            String greeting = en ? "Thank you for your booking." : "Muchas gracias por tu reserva.";
+            String closing = en
+                ? "See you on " + date + "."
+                : "Nos vemos el " + date.toLowerCase() + ".";
             String html = buildHtml(
                 en ? "// booking confirmed" : "// reserva confirmada",
-                date, time,
+                greeting, date, time,
                 en ? "// name" : "// nombre", clientName,
-                clientEmail,
-                en ? "See you soon." : "¡Hasta pronto."
+                null,
+                closing
             );
             send(clientEmail, subject, html);
         } catch (Exception e) {
@@ -75,14 +79,14 @@ public class EmailNotificationService {
         }
     }
 
-    private String buildHtml(String eyebrow, String date, String time,
+    private String buildHtml(String eyebrow, String greeting, String date, String time,
                               String nameLabel, String name, String email,
                               String closing) {
         return "<!DOCTYPE html><html><head><meta charset='UTF-8'>" +
             "<link href='https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300&family=IBM+Plex+Mono:wght@300;400&display=swap' rel='stylesheet'>" +
             "</head>" +
-            "<body style='margin:0;padding:0;background:#1e1a16;color:#f0ebe3;'>" +
-            "<table width='100%' cellpadding='0' cellspacing='0' style='background:#1e1a16;'><tr>" +
+            "<body style='margin:0;padding:0;background:#f8f5f0;color:#3a2e22;'>" +
+            "<table width='100%' cellpadding='0' cellspacing='0' style='background:#f8f5f0;'><tr>" +
             "<td align='center' style='padding:48px 24px;'>" +
             "<table width='100%' style='max-width:480px;' cellpadding='0' cellspacing='0'>" +
 
@@ -91,13 +95,20 @@ public class EmailNotificationService {
             "<div style='height:1px;width:36px;background:#b8902a;'></div></td></tr>" +
 
             // Eyebrow
-            "<tr><td style='padding-bottom:24px;'>" +
-            "<span style='font-family:IBM Plex Mono,monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:#6a5a48;'>" +
+            "<tr><td style='padding-bottom:16px;'>" +
+            "<span style='font-family:IBM Plex Mono,monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:#a08878;'>" +
             esc(eyebrow) + "</span></td></tr>" +
+
+            // Greeting
+            (greeting != null ? (
+            "<tr><td style='padding-bottom:28px;'>" +
+            "<span style='font-family:Cormorant Garamond,Georgia,serif;font-style:italic;font-weight:300;font-size:22px;color:#6e6050;'>" +
+            esc(greeting) + "</span></td></tr>"
+            ) : "") +
 
             // Date
             "<tr><td style='padding-bottom:8px;'>" +
-            "<span style='font-family:Cormorant Garamond,Georgia,serif;font-style:italic;font-weight:300;font-size:38px;color:#f0ebe3;line-height:1.2;text-transform:capitalize;'>" +
+            "<span style='font-family:Cormorant Garamond,Georgia,serif;font-style:italic;font-weight:300;font-size:38px;color:#3a2e22;line-height:1.2;text-transform:capitalize;'>" +
             esc(date) + "</span></td></tr>" +
 
             // Time
@@ -106,38 +117,38 @@ public class EmailNotificationService {
             esc(time) + " h</span></td></tr>" +
 
             // Divider
-            "<tr><td style='height:1px;background:#2a251e;padding:0;font-size:0;'>&nbsp;</td></tr>" +
+            "<tr><td style='height:1px;background:rgba(60,50,40,0.10);padding:0;font-size:0;'>&nbsp;</td></tr>" +
 
             // Name label
             "<tr><td style='padding-top:28px;padding-bottom:6px;'>" +
-            "<span style='font-family:IBM Plex Mono,monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:#6a5a48;'>" +
+            "<span style='font-family:IBM Plex Mono,monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:#a08878;'>" +
             esc(nameLabel) + "</span></td></tr>" +
 
             // Name value
-            "<tr><td style='padding-bottom:20px;'>" +
-            "<span style='font-family:IBM Plex Mono,monospace;font-size:16px;color:#c8bfb0;'>" +
+            "<tr><td style='" + (email != null ? "padding-bottom:20px;" : "padding-bottom:40px;") + "'>" +
+            "<span style='font-family:Cormorant Garamond,Georgia,serif;font-size:20px;color:#4a3e32;'>" +
             esc(name) + "</span></td></tr>" +
 
-            // Email label
+            // Email (optional)
+            (email != null ? (
             "<tr><td style='padding-bottom:6px;'>" +
-            "<span style='font-family:IBM Plex Mono,monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:#6a5a48;'>// email</span></td></tr>" +
-
-            // Email value
+            "<span style='font-family:IBM Plex Mono,monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:#a08878;'>// email</span></td></tr>" +
             "<tr><td style='padding-bottom:40px;'>" +
-            "<span style='font-family:IBM Plex Mono,monospace;font-size:16px;color:#c8bfb0;'>" +
-            esc(email) + "</span></td></tr>" +
+            "<span style='font-family:IBM Plex Mono,monospace;font-size:14px;color:#4a3e32;'>" +
+            esc(email) + "</span></td></tr>"
+            ) : "") +
 
             // Divider
-            "<tr><td style='height:1px;background:#2a251e;padding:0;font-size:0;'>&nbsp;</td></tr>" +
+            "<tr><td style='height:1px;background:rgba(60,50,40,0.10);padding:0;font-size:0;'>&nbsp;</td></tr>" +
 
             // Closing
             "<tr><td style='padding-top:32px;padding-bottom:48px;'>" +
-            "<span style='font-family:Cormorant Garamond,Georgia,serif;font-style:italic;font-size:24px;color:#f0ebe3;'>" +
+            "<span style='font-family:Cormorant Garamond,Georgia,serif;font-style:italic;font-size:24px;color:#3a2e22;'>" +
             esc(closing) + "</span></td></tr>" +
 
             // Footer
-            "<tr><td style='border-top:1px solid #2a251e;padding-top:20px;'>" +
-            "<span style='font-family:IBM Plex Mono,monospace;font-size:9px;letter-spacing:0.1em;color:#4a3e30;'>maxibottazzi.de</span>" +
+            "<tr><td style='border-top:1px solid rgba(60,50,40,0.10);padding-top:20px;'>" +
+            "<span style='font-family:IBM Plex Mono,monospace;font-size:9px;letter-spacing:0.1em;color:#a08878;'>maxibottazzi.de</span>" +
             "</td></tr>" +
 
             "</table></td></tr></table></body></html>";
